@@ -18,7 +18,15 @@ export class SubordinadosComponent implements OnInit {
     private _service : ServiceEmpleados,
     private _router: Router
   ){}
+
+  mandaralogin(){
+    this._router.navigate(["/"])
+
+  }
   async ngOnInit(): Promise<void> {
+    if(!this.token){
+      this.mandaralogin();
+    }
     this.subordinados= await this._service.obtenerSubordinados();
     this._cdr.detectChanges();
   }

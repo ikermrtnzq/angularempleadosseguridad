@@ -11,12 +11,21 @@ import { Empleado } from '../../models/empleado';
 })
 export class MiperfilComponent implements OnInit {
   public perfil! : Empleado
+  public token = sessionStorage.getItem("token");
+
   constructor(
     private _cdr : ChangeDetectorRef,
     private _service : ServiceEmpleados,
     private _router: Router
   ){}
+  mandaralogin(){
+    this._router.navigate(["/"])
+
+  }
   async ngOnInit(): Promise<void> {
+    if(!this.token){
+      this.mandaralogin();
+    }
     this.perfil = await this._service.obtenerPerfil();
     this._cdr.detectChanges()
   }
