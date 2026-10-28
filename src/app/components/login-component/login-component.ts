@@ -3,6 +3,7 @@ import { ServiceEmpleados } from '../../services/service.empleados';
 import { Router } from '@angular/router';
 import { Credencial } from '../../models/credencial';
 
+
 @Component({
   selector: 'app-login-component',
   standalone: false,
@@ -16,14 +17,15 @@ export class LoginComponent {
   constructor(
     private _cdr : ChangeDetectorRef,
     private _service : ServiceEmpleados,
-    private _router: Router
+    private _router: Router,
   ){}
   async login(): Promise<void>{
     let nombre = this.cajaNombre.nativeElement.value;
     let pwd = this.cajacontrasenia.nativeElement.value;
     let credenciales = new Credencial(nombre, pwd)
     let response = await this._service.postLogin(credenciales)
-    console.log(response)
+    console.log(response);
+    sessionStorage.setItem("token", response.response);
     this._router.navigate(["/miperfil"])
 
   }

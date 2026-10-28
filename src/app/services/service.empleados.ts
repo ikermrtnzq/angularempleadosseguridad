@@ -3,11 +3,13 @@ import { ChangeDetectorRef, Injectable } from "@angular/core";
 import { firstValueFrom } from "rxjs";
 import { environment } from "../../environments/environment.development";
 import { Credencial } from "../models/credencial";
+import { Empleado } from "../models/empleado";
 
 @Injectable()
 
 export class ServiceEmpleados{
     url  = environment.url;
+    token = sessionStorage.getItem("token");
     constructor(
         private _http : HttpClient
     ){}
@@ -18,6 +20,23 @@ export class ServiceEmpleados{
         let header = new HttpHeaders().set("content-type","application/json");
         return firstValueFrom(
             this._http.post(this.url+endpoint, json, {headers: header})
+        )
+    }
+    async obtenerPerfil() : Promise<Empleado>{
+        //creamos un objeto header para el type
+        let header= new HttpHeaders().set("authorization", "bearer "+ this.token);
+        let endpoint= "api/Empleados/PerfilEmpleado";
+        return firstValueFrom(
+            this._http.get<Empleado>(this.url+endpoint, {headers: header})
+        )
+    }
+    
+    async obtenerSubordinados() : Promise<Empleado[]>{
+        //creamos un objeto header para el type
+        let header= new HttpHeaders().set("authorization", "bearer "+ this.token);
+        let endpoint= "api/Empleados/subordinados";
+        return firstValueFrom(
+            this._http.get<Empleado[]>(this.url+endpoint, {headers: header})
         )
     }
 }

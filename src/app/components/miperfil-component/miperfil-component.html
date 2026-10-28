@@ -1,3 +1,26 @@
-<div>
-    
-</div>
+
+@if (perfil) {
+    <div class="d-flex flex-column gap-4 mx-auto w-50 pt-5">
+        <button class="btn btn-info border border-info border-3 rounded m-3">
+            <a class="text-decoration-none text-dark" [routerLink]="['/']">volver</a>
+        </button>
+        <table class="table table-bordered table-hover">
+            <thead class="table-info border border-info border-3">
+                <tr> 
+                    <th class="ps-2">Numero</th>
+                    <th class="ps-2">Nombre</th>
+                    <th class="ps-2">Oficio</th>
+                    <th class="ps-2">Salario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border border-info">
+                    <td class="border border-info border-3 ps-2">{{perfil.idEmpleado}}</td>
+                    <td class="border border-info border-3 ps-2">{{perfil.apellido}}</td>
+                    <td class="border border-info border-3 ps-2">{{perfil.oficio}}</td>
+                    <td class="border border-info border-3 ps-2">{{perfil.salario}}€</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
