@@ -12,6 +12,7 @@ import { Empleado } from '../../models/empleado';
 export class MiperfilComponent implements OnInit {
   public perfil! : Empleado
   public token = sessionStorage.getItem("token");
+  
 
   constructor(
     private _cdr : ChangeDetectorRef,
@@ -26,7 +27,11 @@ export class MiperfilComponent implements OnInit {
     if(!this.token){
       this.mandaralogin();
     }
-    this.perfil = await this._service.obtenerPerfil();
-    this._cdr.detectChanges()
+    try {
+      this.perfil = await this._service.obtenerPerfil();
+      this._cdr.detectChanges()
+    } catch (error) {
+      console.log("error")
+    }
   }
 }

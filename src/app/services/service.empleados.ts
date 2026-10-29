@@ -9,7 +9,6 @@ import { Empleado } from "../models/empleado";
 
 export class ServiceEmpleados{
     url  = environment.url;
-    token = sessionStorage.getItem("token");
     constructor(
         private _http : HttpClient
     ){}
@@ -23,8 +22,9 @@ export class ServiceEmpleados{
         )
     }
     async obtenerPerfil() : Promise<Empleado>{
+        const token = sessionStorage.getItem("token");
         //creamos un objeto header para el type
-        let header= new HttpHeaders().set("authorization", "bearer "+ this.token);
+        let header= new HttpHeaders().set("authorization", "bearer "+ token);
         let endpoint= "api/Empleados/PerfilEmpleado";
         return firstValueFrom(
             this._http.get<Empleado>(this.url+endpoint, {headers: header})
@@ -32,8 +32,10 @@ export class ServiceEmpleados{
     }
     
     async obtenerSubordinados() : Promise<Empleado[]>{
+        const token = sessionStorage.getItem("token");
+
         //creamos un objeto header para el type
-        let header= new HttpHeaders().set("authorization", "bearer "+ this.token);
+        let header= new HttpHeaders().set("authorization", "bearer "+ token);
         let endpoint= "api/Empleados/subordinados";
         return firstValueFrom(
             this._http.get<Empleado[]>(this.url+endpoint, {headers: header})
