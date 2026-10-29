@@ -24,9 +24,6 @@ export class MiperfilComponent implements OnInit {
 
   }
   async ngOnInit(): Promise<void> {
-    if(!this.token){
-      this.mandaralogin();
-    }
     try {
       this.perfil = await this._service.obtenerPerfil();
       this._cdr.detectChanges()

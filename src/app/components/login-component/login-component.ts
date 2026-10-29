@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { ServiceEmpleados } from '../../services/service.empleados';
 import { Router } from '@angular/router';
 import { Credencial } from '../../models/credencial';
+import { ServiceAuthEmpleados } from '../../services/service.auth.empleados';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { Credencial } from '../../models/credencial';
 export class LoginComponent {
   @ViewChild("cajanombre") cajaNombre! : ElementRef;
   @ViewChild("cajacontrasenia") cajacontrasenia! : ElementRef;
+  private _serviceAuthEmpleado : ServiceAuthEmpleados = inject(ServiceAuthEmpleados);
 
   constructor(
     private _cdr : ChangeDetectorRef,
@@ -25,7 +27,7 @@ export class LoginComponent {
     let credenciales = new Credencial(nombre, pwd)
     let response = await this._service.postLogin(credenciales)
     console.log(response);
-    sessionStorage.setItem("token", response.response);
+    await this._serviceAuthEmpleado.loginEmpleado(response.response);
     this._router.navigate(["/miperfil"])
 
   }

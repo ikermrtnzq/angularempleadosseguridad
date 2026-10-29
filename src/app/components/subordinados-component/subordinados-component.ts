@@ -24,9 +24,6 @@ export class SubordinadosComponent implements OnInit {
 
   }
   async ngOnInit(): Promise<void> {
-    if(!this.token){
-      this.mandaralogin();
-    }
     this.subordinados= await this._service.obtenerSubordinados();
     this._cdr.detectChanges();
   }
